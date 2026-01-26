@@ -57,7 +57,7 @@ Built specifically for competitive gaming titles like **Standoff 2, CS2, Valoran
 
 ### Instructions
 1.  Download the latest release (`Nexulation.apbx`) from the [Releases](https://github.com/dyagyatis/Nexulation/releases) page.
-2.  Download [AME Wizard Beta](https://download.ameliorated.io/AME%20Beta.zip).
+2.  Download [AME Wizard](https://download.ameliorated.io/AME%20Beta.zip).
 3.  Launch AME Wizard.
 4.  Drag and drop the `Nexulation.apbx` file into the application window.
 5.  Follow the on-screen instructions to customize your installation.
