@@ -70,7 +70,7 @@ If you want to modify this playbook or build it from source:
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/dyagyatis/Nexulation.git](https://github.com/dyagyatis/Nexulation.git)
+    git clone https://github.com/dyagyatis/Nexulation.git
     ```
 2.  Modify the configuration files in `Configuration/main.yml` or `playbook.conf`.
 3.  Run `BUILD.bat` to compile the new `.apbx` file.
