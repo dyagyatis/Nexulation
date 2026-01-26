@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🚀 Nexulation OS</h1>
+  <h1>Nexulation</h1>
   <p>
     <strong>High-Performance Playbook for Windows 10 & 11</strong>
   </p>
@@ -22,7 +22,7 @@
 
 **Nexulation** is a custom Playbook for AME Wizard designed to transform a standard Windows installation into a streamlined, high-performance gaming machine.
 
-Built specifically for competitive gaming titles like **Standoff 2, CS2, Valorant, and Minecraft**, where every millisecond of latency counts. We strip away telemetry, bloatware, and unnecessary background services, leaving only what is essential for stability and gaming performance.
+Built specifically for competitive gaming titles like **CS2, Fortnite**, where every millisecond of latency counts. We strip away telemetry, bloatware, and unnecessary background services, leaving only what is essential for stability and gaming performance.
 
 ## 🛠️ Features
 
