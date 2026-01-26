@@ -1,0 +1,68 @@
+- !writeStatus: {status: 'Applying Visual Effects Settings...'}
+
+# 1. Говорим системе, что мы используем "Особые эффекты" (Custom)
+- !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects'
+    value: 'VisualFXSetting'
+    type: 'DWord'
+    data: 3
+
+# --- ЧТО ОСТАВЛЯЕМ ВКЛЮЧЕННЫМ (Галочки на скриншоте) ---
+
+# "Сглаживание неровностей экранных шрифтов" (Font Smoothing)
+- !registryKey:
+    key: 'HKCU\Control Panel\Desktop'
+    value: 'FontSmoothing'
+    type: 'String'
+    data: '2'
+
+# "Отображение содержимого окна при перетаскивании" (Drag Full Windows)
+- !registryKey:
+    key: 'HKCU\Control Panel\Desktop'
+    value: 'DragFullWindows'
+    type: 'String'
+    data: '1'
+
+# "Вывод эскизов вместо значков" (Show Thumbnails)
+# (Внимание: 0 = показывать эскизы, 1 = только значки. Нам нужно 0)
+- !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    value: 'IconsOnly'
+    type: 'DWord'
+    data: 0
+
+# "Отображение прозрачного прямоугольника выделения" (Translucent Selection)
+- !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    value: 'ListviewAlphaSelect'
+    type: 'DWord'
+    data: 1
+
+# --- ЧТО ОТКЛЮЧАЕМ (Пустые квадраты на скриншоте) ---
+
+# "Анимация окон при свертывании и развертывании" (Min/Max Animation)
+- !registryKey:
+    key: 'HKCU\Control Panel\Desktop\WindowMetrics'
+    value: 'MinAnimate'
+    type: 'String'
+    data: '0'
+
+# "Анимация на панели задач" (Taskbar Animations)
+- !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    value: 'TaskbarAnimations'
+    type: 'DWord'
+    data: 0
+
+# "Меню и подсказки" (Убираем задержку появления меню, делает систему отзывчивее)
+- !registryKey:
+    key: 'HKCU\Control Panel\Desktop'
+    value: 'MenuShowDelay'
+    type: 'String'
+    data: '0'
+
+# --- ПРИМЕНЕНИЕ ---
+# Чтобы настройки вступили в силу, нужно перезапустить Проводник
+- !writeStatus: {status: 'Restarting Explorer to apply tweaks...'}
+- !taskKill: {processName: 'explorer', ignoreErrors: true}
+- !cmd: {command: 'start explorer.exe', ignoreErrors: true}

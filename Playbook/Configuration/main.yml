@@ -1,0 +1,24 @@
+title: Main
+actions:  
+  - !writeStatus: {status: 'Customizing system...'}
+  - !task: {path: 'Tasks/customization.yml'}
+
+  - !writeStatus: {status: 'Optimizing system...'} 
+  - !task: {path: 'Tasks/tweaks.yml'}
+
+  - !writeStatus: {status: 'Removing APPX packages'}
+  - !task: {path: 'Tasks/appx.yml'}
+      option: "conf_appx"
+  
+  - !writeStatus: {status: 'Installing Visual C++ & DirectX'}
+  - !task: {path: 'Tasks/vcpp-dx.yml'}
+      option: "vcpp-dx"
+
+  - !writeStatus: {status: 'Installing GPU Drivers...'}
+  - !powerShell:
+      exeDir: true
+      command: 'if ($conf_gpu_auto) { & ".\Executables\Install-GPUDrivers.ps1" }'
+      wait: true
+
+  - !writeStatus: {status: 'Installing browser...'} 
+  - !task: {path: 'Tasks/browser.yml'}

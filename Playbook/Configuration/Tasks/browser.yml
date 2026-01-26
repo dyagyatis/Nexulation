@@ -1,0 +1,47 @@
+title: Browsers
+description: Installs browsers (Helium & LibreWolf via Choco, Tempest Custom, Brave Native)
+privilege: TrustedInstaller
+actions:
+
+  # --- HELIUM (Chocolatey) ---
+  # Пакет найден! Ставим чисто и надежно.
+  - !writeStatus: {status: 'Installing Helium', option: "conf_browser_helium"}
+  - !software:
+      option: "conf_browser_helium"
+      name: "helium"
+      source: chocolatey
+
+  # --- LIBREWOLF (Chocolatey) ---
+  - !writeStatus: {status: 'Installing LibreWolf', option: "conf_browser_librewolf"}
+  - !software:
+      option: "conf_browser_librewolf"
+      name: "librewolf"
+      source: chocolatey
+
+  # --- TEMPEST (Custom Silent Installer) ---
+  # Используем твой репак с GitHub для тихой установки
+  - !writeStatus: {status: 'Installing Tempest)', option: "conf_browser_tempest"}
+  - !download: 
+      option: "conf_browser_tempest"
+      # Ссылка на RAW файл твоего инсталлятора
+      url: 'https://github.com/dyagyatis/tempestbrowserinstallersilent/raw/main/tempestinstaller.exe'
+      destination: 'C:\Windows\Temp\tempest_silent.exe'
+  - !run:
+      option: "conf_browser_tempest"
+      exe: 'C:\Windows\Temp\tempest_silent.exe'
+      args: "/S" 
+      wait: true
+
+  # --- BRAVE (Native) ---
+  - !writeStatus: {status: 'Installing Brave', option: "conf_browser_brave"}
+  - !download: 
+      option: "conf_browser_brave"
+      url: 'https://github.com/brave/brave-browser/releases/latest/download/BraveBrowserStandaloneSetup.exe'
+      destination: 'C:\Windows\Temp\BraveBrowserStandaloneSetup.exe'
+      cpuArch: X64
+  - !run:
+      option: "conf_browser_brave"
+      exe: 'C:\Windows\Temp\BraveBrowserStandaloneSetup.exe'
+      args: "/silent /install"
+      cpuArch: X64
+      wait: true

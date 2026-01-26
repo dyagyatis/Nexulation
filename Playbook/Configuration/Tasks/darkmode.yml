@@ -1,0 +1,11 @@
+  - !writeStatus: {status: 'Enabling Dark Mode'}
+  - !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+    value: 'AppsUseLightTheme'
+    type: 'DWord'
+    data: 0
+  - !registryKey:
+    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+    value: 'SystemUsesLightTheme'
+    type: 'DWord'
+    data: 0

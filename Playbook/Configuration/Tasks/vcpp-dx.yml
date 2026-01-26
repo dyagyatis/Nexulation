@@ -1,0 +1,6 @@
+  - !software:
+      name: 'vcredist-all'
+      source: chocolatey
+  - !software:
+      name: 'directx'
+      source: chocolatey
