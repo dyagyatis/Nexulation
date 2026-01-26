@@ -51,9 +51,8 @@ Built specifically for competitive gaming titles like **CS2, Fortnite**, where e
 ## 📥 Installation
 
 ### Requirements
-* A clean installation of Windows 10 or 11 (Pro edition recommended).
+* A clean installation of Windows 10 or 11.
 * Internet connection.
-* **AME Wizard v0.8.3** (or compatible version).
 
 ### Instructions
 1.  Download the latest release (`Nexulation.apbx`) from the [Releases](https://github.com/dyagyatis/Nexulation/releases) page.
