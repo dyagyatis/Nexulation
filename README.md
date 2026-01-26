@@ -43,8 +43,8 @@ Built specifically for competitive gaming titles like **CS2, Fortnite**, where e
 ### 🛡️ Privacy & Utilities
 - **No Spyware:** Disabled telemetry and data collection.
 - **Silent UAC:** Administrator prompts no longer dim the screen.
-- **Essential Tools:** Auto-installation of NanaZip, Notepad++, VC++ Runtimes, and DirectX.
-- **Driver Auto-Install:** Automatically detects and installs optimized drivers for Nvidia/AMD GPUs.
+- **Essential Tools:** Auto-installation of VC++ Runtime and DirectX.
+- **Driver Install:** installs optimized drivers for Nvidia/AMD GPUs.
 
 ---
 
