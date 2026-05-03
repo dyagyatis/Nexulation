@@ -1,10 +1,9 @@
 <div align="center">
   <h1>Nexulation</h1>
   <p>
-    <strong>High-Performance Playbook for Windows 10 & 11</strong>
+    <strong>Playbook for Windows 10 22H2 & 11 22H2+</strong>
   </p>
-  <p>
-    Maximum FPS. Lowest Input Lag. No Bloatware.
+  <p>.
   </p>
 
   <p>
@@ -24,34 +23,12 @@
 
 Built specifically for competitive gaming titles like **CS2, Fortnite**, where every millisecond of latency counts. We strip away telemetry, bloatware, and unnecessary background services, leaving only what is essential for stability and gaming performance.
 
-## 🛠️ Features
-
-### 🎮 Performance & Gaming
-- **Ping Killer:** Optimized TCP/IP stack (Nagle's Algorithm disabled) for better hit registration.
-- **Power Plan:** "Ultimate Performance" plan enabled by default.
-- **Debloating:** Removed Cortana, OneDrive, Widgets, Teams, and pre-installed ads.
-- **RAM Optimization:** Hibernation disabled to save disk space and reduce memory usage.
-- **Input Lag:** Mouse acceleration disabled (1:1 input) and sticky keys removed.
-
-### 🎨 Visuals & Aesthetics
-- **Dark Mode:** System-wide dark theme enabled by default.
-- **StartAllBack:** (Optional) Restores the classic Taskbar and Start Menu for better usability.
-- **Clean Desktop:** Removed shortcut arrows and the "- Shortcut" text suffix.
-- **Legacy Context Menu:** Restored classic Right-Click menu (Windows 10 style).
-- **Branding:** Custom Nexulation wallpapers and themes.
-
-### 🛡️ Privacy & Utilities
-- **No Spyware:** Disabled telemetry and data collection.
-- **Silent UAC:** Administrator prompts no longer dim the screen.
-- **Essential Tools:** Auto-installation of VC++ Runtime and DirectX.
-- **Driver Install:** installs optimized drivers for Nvidia/AMD GPUs.
-
 ---
 
 ## 📥 Installation
 
 ### Requirements
-* A clean installation of Windows 10 or 11.
+* A clean installation of Windows 10 22H2 or 11 22H2+.
 * Internet connection.
 
 ### Instructions
