@@ -3,7 +3,7 @@
   <p>
     <strong>Playbook for Windows 10 22H2 & 11 22H2+</strong>
   </p>
-  <p>.
+  <p>
   </p>
 
   <p>
