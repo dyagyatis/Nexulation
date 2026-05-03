@@ -1,0 +1,45 @@
+title: Game-launchers
+description: Installs launchers
+privilege: TrustedInstaller
+actions:
+  - !writeStatus: {status: 'Installing VK Play', option: "vkplay"}
+  - !download:
+     option: "vkplay"
+     url: 'https://static.gc.vkplay.ru/VKPlayLoader.exe'
+     destination: "VKPlayLoader.exe"
+  - !run:
+     option: "vkplay"     
+     exeDir: true
+     exe: "VKPlayLoader.exe"
+     args: '/S'
+     weight: 70
+
+  - !writeStatus: {status: 'Installing Steam', option: "steam"}
+  - !software:
+      option: "steam"
+      name: "steam"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Epic Games Launcher', option: "egl"}
+  - !software:
+      option: "egl"
+      name: "epicgameslauncher"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Heroic Games Launcher', option: "heroic"}
+  - !software:
+      option: "heroic"
+      name: "heroic-games-launcher.install"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Rare', option: "rare"}
+  - !software:
+      option: "rare"
+      name: "rare"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Hydra', option: "hydra"}
+  - !software:
+      option: "hydra"
+      name: "hydra-launcher"
+      source: chocolatey

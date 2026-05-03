@@ -1,0 +1,15 @@
+title: Messengers
+description: Installs Messengers
+privilege: TrustedInstaller
+actions:
+  - !writeStatus: {status: 'Installing Discord', option: "discord"}
+  - !software:
+      option: "discord"
+      name: "discord"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Telegram', option: "telegram"}
+  - !software:
+      option: "telegram"
+      name: "telegram"
+      source: chocolatey

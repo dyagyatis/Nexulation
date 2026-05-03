@@ -7,18 +7,20 @@ actions:
   - !task: {path: 'Tasks/tweaks.yml'}
 
   - !writeStatus: {status: 'Removing APPX packages'}
-  - !task: {path: 'Tasks/appx.yml'}
-      option: "conf_appx"
+  - !task: 
+      path: 'Tasks/appx.yml'
+      option: 'appx'
   
   - !writeStatus: {status: 'Installing Visual C++ & DirectX'}
-  - !task: {path: 'Tasks/vcpp-dx.yml'}
-      option: "vcpp-dx"
-
-  - !writeStatus: {status: 'Installing GPU Drivers...'}
-  - !powerShell:
-      exeDir: true
-      command: 'if ($conf_gpu_auto) { & ".\Executables\Install-GPUDrivers.ps1" }'
-      wait: true
+  - !task: 
+      path: 'Tasks/vcpp-dx.yml'
+      option: 'vcpp-dx'
 
   - !writeStatus: {status: 'Installing browser...'} 
   - !task: {path: 'Tasks/browser.yml'}
+
+  - !writeStatus: {status: 'Installing messenger...'} 
+  - !task: {path: 'Tasks/messenger.yml'}
+
+  - !writeStatus: {status: 'Installing launcher...'} 
+  - !task: {path: 'Tasks/gamelauncher.yml'}

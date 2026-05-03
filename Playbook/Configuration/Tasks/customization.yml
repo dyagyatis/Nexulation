@@ -1,47 +1,47 @@
+title: Customization
+actions:
   - !writeStatus: {status: 'Installing StartAllBack'}
   - !cmd:
-    option: "startallback"
-    runas: currentUserElevated
-    command: 'powershell -Command "Start-Process -FilePath ''Executables\StartAllBack_v3.9.20.5345.exe'' -ArgumentList ''/silent /elevated'' -Wait"'
-    ignoreErrors: true
+      option: "startallback"
+      runas: currentUserElevated
+      command: 'powershell -Command "Start-Process -FilePath ''Executables\StartAllBack_v3.9.20.5345.exe'' -ArgumentList ''/silent /elevated'' -Wait"'
+      ignoreErrors: true
 
   - !writeStatus: {status: 'Installing Nilesoft-Shell'}
   - !software:
-    option: "nilesoftshell"
-    name: "nilesoft-shell"
-    source: chocolatey
+      option: "nilesoftshell"
+      name: "nilesoft-shell"
+      source: chocolatey
 
   - !writeStatus: {status: 'Applying Nexulation Wallpaper'}
   - !cmd:
-    option: "setwallpaper"
-    command: |
-      powershell -Command "Copy-Item 'Executables\Wallpaper\Dark.jpg' -Destination 'C:\Windows\Web\Wallpaper\Nexulation.jpg' -Force; Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'Wallpaper' -Value 'C:\Windows\Web\Wallpaper\Nexulation.jpg'; RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters"
-    ignoreErrors: true 
+      option: "setwallpaper"
+      command: |
+        powershell -Command "Copy-Item 'Executables\Wallpaper\Dark.jpg' -Destination 'C:\Windows\Web\Wallpaper\Nexulation.jpg' -Force; Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'Wallpaper' -Value 'C:\Windows\Web\Wallpaper\Nexulation.jpg'; RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters"
+      ignoreErrors: true 
 
   - !writeStatus: {status: 'Enabling Dark Mode'}
-  - !task: {path: 'Tasks/darkmode.yml'}  
+  - !task: 
+      path: 'Tasks/darkmode.yml'
+      option: 'edarkmode'
 
   - !writeStatus: {status: 'Restoring Classic Context Menu'}
-  - !registryKey:
-    key: 'HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32'
-    value: ''
-    type: 'String'
-    data: ''
-    option: "classiccontextmenu"  
-    
-  - !writeStatus: {status: 'Editing visual effects'}
-  - !task: {path: 'Tasks/visualfx.yml'}  
+  - !registryValue:
+      path: 'HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32'
+      value: ''
+      type: REG_SZ
+      data: ''
+      option: "classiccontextmenu"  
     
   - !writeStatus: {status: 'Cleaning up Shortcut Look...'}
-  - !registryKey:
-    key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer'
-    value: 'link'
-    type: 'Binary'
-    data: '00000000'
+  - !registryValue:
+      path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer'
+      value: 'link'
+      type: REG_BINARY
+      data: '00000000'
 
-  - !registryKey:
-    key: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons'
-    value: '29'
-    type: 'String'
-    data: '%windir%\System32\shell32.dll,50'   
-    
+  - !registryValue:
+      path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons'
+      value: '29'
+      type: REG_SZ
+      data: '%windir%\System32\shell32.dll,50'
