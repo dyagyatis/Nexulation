@@ -1,9 +1,0 @@
-title: Installing Runtimes
-actions:
-  - !software:
-      name: 'vcredist-all'
-      source: chocolatey
-
-  - !software:
-      name: 'directx'
-      source: chocolatey
