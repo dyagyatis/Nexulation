@@ -1,0 +1,89 @@
+title: Applying tweaks
+actions:
+  # Disable Gamemode
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'AllowAutoGameMode', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'AutoGameModeEnabled', type: REG_DWORD, data: '0'}
+
+  # Disable Gamebar
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_Enabled', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR', value: 'AppCaptureEnabled', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'GamePanelStartupTipIndex', type: REG_DWORD, data: '3'}
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'ShowStartupPanel', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'UseNexusForGameBarEnabled', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter', value: 'ActivationType', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR', value: 'AllowGameDVR', type: REG_DWORD, data: '0'} #Enables or disables Windows Game Recording and Broadcasting
+  - !registryValue: {path: 'HKCR\ms-gamebar', value: '', type: REG_SZ, data: 'URL:ms-gamebar'}
+  - !registryValue: {path: 'HKCR\ms-gamebar', value: 'URL Protocol', type: REG_SZ, data: ''}
+  - !registryValue: {path: 'HKCR\ms-gamebar', value: 'NoOpenWith', type: REG_SZ, data: ''}
+  - !registryValue: {path: 'HKCR\ms-gamebar\shell\open\command', value: '', type: REG_EXPAND_SZ, data: '%systemroot%\System32\systray.exe'}
+
+  # Gamedvr
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_DSEBehavior', type: REG_DWORD, data: '2'}
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_DXGIHonorFSEWindowsCompatible', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_FSEBehavior', type: REG_DWORD, data: '2'}
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_FSEBehaviorMode', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_HonorUserFSEBehaviorMode', type: REG_DWORD, data: '1'}
+
+  # 2. Настройка приоритета игр (SystemProfile)
+  # Устанавливает приоритет GPU и системы на игры
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games', value: 'GPU Priority', type: REG_DWORD, data: '8'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games', value: 'Priority', type: REG_DWORD, data: '6'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games', value: 'Scheduling Category', type: REG_SZ, data: 'High'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games', value: 'SFIO Priority', type: REG_SZ, data: 'High'}
+
+  # 3. Отключение троттлинга сети (Network Throttling)
+  # По умолчанию Windows ограничивает обработку сетевых пакетов не мультимедийного трафика.
+  # Значение 4294967295 (ffffffff) отключает это ограничение.
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile', value: 'NetworkThrottlingIndex', type: REG_DWORD, data: '4294967295'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile', value: 'SystemResponsiveness', type: REG_DWORD, data: '0'}
+
+  # 4. Отключение Power Throttling (Энергосбережение)
+  # Запрещает системе урезать ресурсы для фоновых процессов (полезно при сворачивании игр или использовании второго монитора)
+  - !registryValue:
+      path: 'HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling'
+      value: 'PowerThrottlingOff'
+      type: REG_DWORD
+      data: '1'
+      option: 'powerthrottling'
+
+  # 5. Disable Mouse Acceleration (Enhance Pointer Precision)
+  - !registryValue: {path: 'HKCU\Control Panel\Mouse', value: 'MouseSpeed', type: REG_SZ, data: '0'}
+  - !registryValue: {path: 'HKCU\Control Panel\Mouse', value: 'MouseThreshold1', type: REG_SZ, data: '0'}
+  - !registryValue: {path: 'HKCU\Control Panel\Mouse', value: 'MouseThreshold2', type: REG_SZ, data: '0'}
+
+  # 6. Disable Background Apps globally
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications', value: 'GlobalUserDisabled', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy', value: 'LetAppsRunInBackground', type: REG_DWORD, data: '2'}
+
+  # 7. Disable Hibernation (Frees up disk space and stops unnecessary background writes)
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Power', value: 'HibernateEnabled', type: REG_DWORD, data: '0'}
+
+  # 8. Disable Telemetry and Data Collection (Privacy & Performance)
+  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection', value: 'AllowTelemetry', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection', value: 'AllowTelemetry', type: REG_DWORD, data: '0'}
+
+  # 9. Disable Web Search in Start Menu (Removes Bing from local search, speeds up Start Menu)
+  - !registryValue: {path: 'HKCU\SOFTWARE\Policies\Microsoft\Windows\Explorer', value: 'DisableSearchBoxSuggestions', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Search', value: 'BingSearchEnabled', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Search', value: 'CortanaConsent', type: REG_DWORD, data: '0'}
+
+  # 10. Disable Sticky Keys & Filter Keys (Prevents interruptions during gaming)
+  - !registryValue: {path: 'HKCU\Control Panel\Accessibility\StickyKeys', value: 'Flags', type: REG_SZ, data: '506'}
+  - !registryValue: {path: 'HKCU\Control Panel\Accessibility\ToggleKeys', value: 'Flags', type: REG_SZ, data: '58'}
+  - !registryValue: {path: 'HKCU\Control Panel\Accessibility\Keyboard Response', value: 'Flags', type: REG_SZ, data: '122'}
+
+  # 11. Disable Windows Update Delivery Optimization (Stops your PC from seeding updates to others)
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config', value: 'DODownloadMode', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization', value: 'DODownloadMode', type: REG_DWORD, data: '0'}
+
+  - !writeStatus: {status: 'Disabling Reserved Storage for Updates'}
+  
+  # Отключение зарезервированного хранилища через DISM (Официальный метод)
+  - !cmd:
+      command: 'dism /Online /Set-ReservedStorageState /State:Disabled'
+      ignoreErrors: true
+      
+  # Отключение через реестр (как указано в описании на вашем скриншоте)
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'ShippedWithReserves', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'PassedPolicy', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'MiscPolicyInfo', type: REG_DWORD, data: '2'}
