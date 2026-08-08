@@ -20,10 +20,11 @@ actions:
   # Dark Theme (Wallpaper, Accent Colors & System Theme)
   # ========================================================
   - !writeStatus: {status: 'Applying Dark Theme (Wallpaper, Accent Colors & System Theme)'}
-  - !cmd:
+  - !powerShell:
       option: "dark"
-      command: |
-        powershell -Command "Copy-Item 'Executables\Wallpaper\Dark.jpg' -Destination 'C:\Windows\Web\Wallpaper\Nexulation-Dark.jpg' -Force; Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'Wallpaper' -Value 'C:\Windows\Web\Wallpaper\Nexulation-Dark.jpg'; RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters"
+      script: 'Executables\Set-Wallpaper.ps1'
+      args: '-WallpaperFile Dark.jpg'
+      wait: true
       ignoreErrors: true
       
   - !registryValue {option: "dark", path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent', value: 'AccentPalette', type: REG_BINARY, data: 'c1,e7,ea,00,a0,c7,cf,00,60,92,a5,00,50,7a,8d,00,3e,61,74,00,28,42,54,00,0e,1d,30,00,88,17,98,00'}
@@ -36,10 +37,11 @@ actions:
   # Light Theme (Wallpaper, Accent Colors & System Theme)
   # ========================================================
   - !writeStatus: {status: 'Applying Light Theme (Wallpaper, Accent Colors & System Theme)'}
-  - !cmd:
+  - !powerShell:
       option: "light"
-      command: |
-        powershell -Command "Copy-Item 'Executables\Wallpaper\Light.jpg' -Destination 'C:\Windows\Web\Wallpaper\Nexulation-Light.jpg' -Force; Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'Wallpaper' -Value 'C:\Windows\Web\Wallpaper\Nexulation-Light.jpg'; RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters"
+      script: 'Executables\Set-Wallpaper.ps1'
+      args: '-WallpaperFile Light.jpg'
+      wait: true
       ignoreErrors: true
       
   - !registryValue {option: "light", path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent', value: 'AccentPalette', type: REG_BINARY, data: 'c3,e7,ed,00,a1,c7,d4,00,62,8f,ad,00,50,79,99,00,3e,60,7f,00,28,40,5e,00,0e,1b,38,00,88,17,98,00'}
@@ -49,66 +51,22 @@ actions:
   - !registryValue {option: "light", path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize', value: 'SystemUsesLightTheme', type: REG_DWORD, data: '1'}
 
   - !writeStatus: {status: 'Applying Visual Effects Settings...'}
-  # 1. Говорим системе, что мы используем "Особые эффекты" (Custom)
-  - !registryKey:
-      key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects'
-      value: 'VisualFXSetting'
-      type: 'DWord'
-      data: 3
-
-  # --- ЧТО ОСТАВЛЯЕМ ВКЛЮЧЕННЫМ (Галочки на скриншоте) ---
-
-  # "Сглаживание неровностей экранных шрифтов" (Font Smoothing)
-  - !registryKey:
-      key: 'HKCU\Control Panel\Desktop'
-      value: 'FontSmoothing'
-      type: 'String'
-      data: '2'
-
-  # "Отображение содержимого окна при перетаскивании" (Drag Full Windows)
-  - !registryKey:
-      key: 'HKCU\Control Panel\Desktop'
-      value: 'DragFullWindows'
-      type: 'String'
-      data: '1'
-
-  # "Вывод эскизов вместо значков" (Show Thumbnails)
-  # (Внимание: 0 = показывать эскизы, 1 = только значки. Нам нужно 0)
-  - !registryKey:
-      key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-      value: 'IconsOnly'
-      type: 'DWord'
-      data: 0
-
-  # "Отображение прозрачного прямоугольника выделения" (Translucent Selection)
-  - !registryKey:
-      key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-      value: 'ListviewAlphaSelect'
-      type: 'DWord'
-      data: 1
-
-  # --- ЧТО ОТКЛЮЧАЕМ (Пустые квадраты на скриншоте) ---
-
-  # "Анимация окон при свертывании и развертывании" (Min/Max Animation)
-  - !registryKey:
-      key: 'HKCU\Control Panel\Desktop\WindowMetrics'
-      value: 'MinAnimate'
-      type: 'String'
-      data: '0'
-
-  # "Анимация на панели задач" (Taskbar Animations)
-  - !registryKey:
-      key: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-      value: 'TaskbarAnimations'
-      type: 'DWord'
-      data: 0
-
-  # "Меню и подсказки" (Убираем задержку появления меню, делает систему отзывчивее)
-  - !registryKey:
-      key: 'HKCU\Control Panel\Desktop'
-      value: 'MenuShowDelay'
-      type: 'String'
-      data: '0'
+  # Visual FX Mode -> Custom (3)
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects', value: 'VisualFXSetting', type: REG_DWORD, data: '3'}
+  # Font Smoothing (2)
+  - !registryValue: {path: 'HKCU\Control Panel\Desktop', value: 'FontSmoothing', type: REG_SZ, data: '2'}
+  # Drag Full Windows (1)
+  - !registryValue: {path: 'HKCU\Control Panel\Desktop', value: 'DragFullWindows', type: REG_SZ, data: '1'}
+  # Show Thumbnails (IconsOnly = 0)
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'IconsOnly', type: REG_DWORD, data: '0'}
+  # Translucent Selection (1)
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ListviewAlphaSelect', type: REG_DWORD, data: '1'}
+  # Window Min/Max Animation (0)
+  - !registryValue: {path: 'HKCU\Control Panel\Desktop\WindowMetrics', value: 'MinAnimate', type: REG_SZ, data: '0'}
+  # Taskbar Animations (0)
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarAnimations', type: REG_DWORD, data: '0'}
+  # Menu Show Delay (0)
+  - !registryValue: {path: 'HKCU\Control Panel\Desktop', value: 'MenuShowDelay', type: REG_SZ, data: '0'}
 
   - !writeStatus: {status: 'Enabling Classic Context Menu', option: "classiccontextmenu"}
   - !registryValue:

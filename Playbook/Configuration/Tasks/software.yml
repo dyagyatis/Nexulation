@@ -111,6 +111,39 @@ actions:
       name: "telegram"
       source: chocolatey
 
+  # ========================================================
+  # System Utilities & Gamer Tools
+  # ========================================================
+  - !writeStatus: {status: 'Installing Process Lasso', option: "processlasso"}
+  - !software:
+      option: "processlasso"
+      name: "processlasso"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing MSI Afterburner', option: "msiafterburner"}
+  - !software:
+      option: "msiafterburner"
+      name: "msi-afterburner"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing LatencyMon', option: "latencymon"}
+  - !software:
+      option: "latencymon"
+      name: "latencymon"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing 7-Zip', option: "7zip"}
+  - !software:
+      option: "7zip"
+      name: "7zip.install"
+      source: chocolatey
+
+  - !writeStatus: {status: 'Installing Notepad++', option: "notepadplusplus"}
+  - !software:
+      option: "notepadplusplus"
+      name: "notepadplusplus.install"
+      source: chocolatey
+
   # Onedrive
   - !status: {status: 'Removing OneDrive'}
   - !cmd: {command: 'OneDriveSetup /uninstall', runas: currentUserElevated, wait: true}

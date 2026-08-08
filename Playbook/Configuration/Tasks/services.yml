@@ -37,6 +37,14 @@ actions:
   - !service: {name: 'RetailDemo', startup: 4}
 
   # ========================================================
+  # Storage & Performance Services
+  # ========================================================
+  - !writeStatus: {status: 'Disabling Windows Search Indexing for Disk Optimization'}
+  
+  # Windows Search Indexer (Убирает фоновую индексацию дисков)
+  - !service: {name: 'WSearch', startup: 4}
+
+  # ========================================================
   # Optional Services (Requires Checkbox in Features)
   # ========================================================
   - !writeStatus: {status: 'Disabling Print Spooler', option: 'disable_printer'}

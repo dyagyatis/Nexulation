@@ -5,7 +5,7 @@ actions:
   - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'AutoGameModeEnabled', type: REG_DWORD, data: '0'}
 
   # Disable Gamebar
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_Enabled', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_Enabled', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR', value: 'AppCaptureEnabled', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'GamePanelStartupTipIndex', type: REG_DWORD, data: '3'}
   - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\GameBar', value: 'ShowStartupPanel', type: REG_DWORD, data: '0'}
@@ -17,12 +17,9 @@ actions:
   - !registryValue: {path: 'HKCR\ms-gamebar', value: 'NoOpenWith', type: REG_SZ, data: ''}
   - !registryValue: {path: 'HKCR\ms-gamebar\shell\open\command', value: '', type: REG_EXPAND_SZ, data: '%systemroot%\System32\systray.exe'}
 
-  # Gamedvr
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_DSEBehavior', type: REG_DWORD, data: '2'}
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_DXGIHonorFSEWindowsCompatible', type: REG_DWORD, data: '0'}
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_FSEBehavior', type: REG_DWORD, data: '2'}
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_FSEBehaviorMode', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKCU\System\GameConfigStore', value: 'GameDVR_HonorUserFSEBehaviorMode', type: REG_DWORD, data: '1'}
+  # Win32PrioritySeparation = 0x18 (24 decimal)
+  # 1:1 Quantum ratio for stable FPS, minimal latency, and zero FPS drops
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl', value: 'Win32PrioritySeparation', type: REG_DWORD, data: '24'}
 
   # 2. Настройка приоритета игр (SystemProfile)
   # Устанавливает приоритет GPU и системы на игры
@@ -87,3 +84,47 @@ actions:
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'ShippedWithReserves', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'PassedPolicy', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager', value: 'MiscPolicyInfo', type: REG_DWORD, data: '2'}
+
+  # 12. Enable MSI Mode for GPU, USB, Network and Storage (DPC/ISR Latency reduction)
+  - !writeStatus: {status: 'Enabling MSI Mode (Message Signaled Interrupts)...'}
+  - !powerShell:
+      script: 'Executables\Enable-MSIMode.ps1'
+      wait: true
+      ignoreErrors: true
+
+  # 13. Enable Ultimate Performance Power Plan & Disable Core Parking
+  - !writeStatus: {status: 'Applying Ultimate Performance Plan & Disabling Core Parking...'}
+  - !powerShell:
+      script: 'Executables\Set-UltimatePowerPlan.ps1'
+      wait: true
+      ignoreErrors: true
+
+  # 14. Disable Non-Essential ETW / Autologger Tracing Sessions
+  - !writeStatus: {status: 'Disabling Background ETW Autologger Sessions...'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener', value: 'Start', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Circular Kernel Context Logger', value: 'Start', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\CloudExperienceHostOobe', value: 'Start', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Diagtrack-Listener', value: 'Start', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SQMLogger', value: 'Start', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\WdiContextLog', value: 'Start', type: REG_DWORD, data: '0'}
+
+  # 15. NTFS Filesystem Performance Optimization
+  - !writeStatus: {status: 'Optimizing NTFS Filesystem Performance...'}
+  - !cmd: {command: 'fsutil behavior set disablelastaccess 1', ignoreErrors: true}
+  - !cmd: {command: 'fsutil behavior set disable8dot3 1', ignoreErrors: true}
+
+  # 16. SSD & HDD Storage Optimizations
+  - !writeStatus: {status: 'Optimizing SSD & HDD Storage (Enabling TRIM & Disabling Defrag Tasks)...'}
+  - !cmd: {command: 'fsutil behavior set DisableDeleteNotify 0', ignoreErrors: true}
+  - !cmd: {command: 'schtasks /Change /TN "\Microsoft\Windows\Defrag\ScheduledDefrag" /Disable', ignoreErrors: true}
+
+  # 17. Keyboard Input Responsiveness (Instant repeat delay & max repeat rate)
+  - !writeStatus: {status: 'Optimizing Keyboard Input Responsiveness...'}
+  - !registryValue: {path: 'HKCU\Control Panel\Keyboard', value: 'KeyboardDelay', type: REG_SZ, data: '0'}
+  - !registryValue: {path: 'HKCU\Control Panel\Keyboard', value: 'KeyboardSpeed', type: REG_SZ, data: '31'}
+
+  # 18. Disable Memory Integrity (HVCI / VBS) for Maximum FPS
+  - !writeStatus: {status: 'Disabling Memory Integrity (HVCI / VBS) for Maximum FPS...'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity', value: 'Enabled', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard', value: 'EnableVirtualizationBasedSecurity', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard', value: 'RequirePlatformSecurityFeatures', type: REG_DWORD, data: '0'}
